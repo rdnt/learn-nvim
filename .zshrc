@@ -37,6 +37,8 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 PROMPT='%B%F{10}%n@%m%f%b:%B%F{12}%~%f%b$ '
 
+# TODO: examine above commands and remove unnecessary ones
+
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'

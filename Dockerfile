@@ -1,11 +1,15 @@
-FROM ubuntu:22.10
+FROM ubuntu:22.04 as builder
 
 RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y --no-install-recommends \
-        sudo \
-        ca-certificates
+    apt-get upgrade -y
 
+FROM builder
+
+RUN apt-get install -y --no-install-recommends \
+        ca-certificates \
+        sudo \
+        curl
+        
 RUN apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
@@ -22,20 +26,13 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
+ADD bootstrap.sh /home/$USERNAME/bootstrap.sh
+RUN chmod +x /home/$USERNAME/bootstrap.sh
+
 USER $USERNAME
 
-RUN apt-get install -y \
-        curl \
-        zsh \
-        git \
-        neovim \
-        nano
-
-
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN /home/$USERNAME/bootstrap.sh
 
 WORKDIR /home/$USERNAME/app
-
-SHELL [ "/bin/bash" ]
 
 ENTRYPOINT [ "zsh" ]

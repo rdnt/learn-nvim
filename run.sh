@@ -1,5 +1,8 @@
 #!/bin/bash
-clear
+
+# Run starts the container and creates mounts
+#   for persistence of the user's config files.
+
 docker run \
     -it \
     --mount type=bind,source=$PWD/.config,target=/home/tasos/.config \
