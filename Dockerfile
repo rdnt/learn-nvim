@@ -14,25 +14,25 @@ RUN apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-ARG USERNAME=tasos
+ARG USER=flynn
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-RUN groupadd --gid $USER_GID $USERNAME \
-    && useradd --uid $USER_UID --gid $USER_GID --shell /bin/zsh -m $USERNAME \
+RUN groupadd --gid $USER_GID $USER \
+    && useradd --uid $USER_UID --gid $USER_GID --shell /bin/zsh -m $USER \
     # Add sudo support
     && apt-get update \
     && apt-get install -y sudo \
-    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
-    && chmod 0440 /etc/sudoers.d/$USERNAME
+    && echo $USER ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USER \
+    && chmod 0440 /etc/sudoers.d/$USER
 
-ADD bootstrap.sh /home/$USERNAME/bootstrap.sh
-RUN chmod +x /home/$USERNAME/bootstrap.sh
+ADD bootstrap.sh /home/$USER/bootstrap.sh
+RUN chmod +x /home/$USER/bootstrap.sh
 
-USER $USERNAME
+USER $USER
 
-RUN /home/$USERNAME/bootstrap.sh
+RUN /home/$USER/bootstrap.sh
 
-WORKDIR /home/$USERNAME/app
+WORKDIR /home/$USER/app
 
 ENTRYPOINT [ "zsh" ]
