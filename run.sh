@@ -12,5 +12,5 @@ docker run \
     --hostname $HOSTNAME \
     --mount type=bind,source=$PWD/.config,target=/home/$USER/.config \
     --mount type=bind,source=$PWD/.zshrc,target=/home/$USER/.zshrc \
-    --mount type=bind,source=$PWD/app,target=/home/$USER/app \
+    --mount type=bind,source=$PWD/workspace,target=/home/$USER/workspace \
     learn-nvim

@@ -1,9 +1,8 @@
 FROM ubuntu:22.04 as builder
 
 RUN apt-get update && \
-    apt-get upgrade -y
-
-RUN apt-get install -y --no-install-recommends \
+    apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends \
         ca-certificates \
         sudo \
         curl \
@@ -32,6 +31,6 @@ USER $USER
 
 RUN /home/$USER/bootstrap.sh
 
-WORKDIR /home/$USER/app
+WORKDIR /home/$USER/workspace
 
 ENTRYPOINT [ "zsh" ]
