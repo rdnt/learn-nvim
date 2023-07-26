@@ -3,16 +3,15 @@ FROM ubuntu:22.04 as builder
 RUN apt-get update && \
     apt-get upgrade -y
 
-FROM builder
-
 RUN apt-get install -y --no-install-recommends \
         ca-certificates \
         sudo \
-        curl
-        
-RUN apt-get autoremove -y \
+        curl \
+    && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
+
+FROM builder
 
 ARG USER=flynn
 ARG USER_UID=1000
