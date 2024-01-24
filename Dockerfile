@@ -6,11 +6,23 @@ RUN apt-get update && \
         ca-certificates \
         sudo \
         curl \
+        gpg-agent \
+        software-properties-common \
+        build-essential \
+        zsh \
+        git \
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-FROM builder
+# Add neovim repo
+RUN add-apt-repository -y ppa:neovim-ppa/unstable
+
+# Install system dependencies
+RUN apt-get install -y --no-install-recommends \
+        neovim
+
+FROM builder as base
 
 ARG USER=flynn
 ARG USER_UID=1000
@@ -19,8 +31,6 @@ ARG USER_GID=$USER_UID
 RUN groupadd --gid $USER_GID $USER \
     && useradd --uid $USER_UID --gid $USER_GID --shell /bin/zsh -m $USER \
     # Add sudo support
-    && apt-get update \
-    && apt-get install -y sudo \
     && echo $USER ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USER \
     && chmod 0440 /etc/sudoers.d/$USER
 
@@ -29,8 +39,8 @@ RUN chmod +x /home/$USER/bootstrap.sh
 
 USER $USER
 
-RUN /home/$USER/bootstrap.sh
-
 WORKDIR /home/$USER/workspace
+
+RUN bash -c ~/bootstrap.sh
 
 ENTRYPOINT [ "zsh" ]

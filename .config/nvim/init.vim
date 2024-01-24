@@ -1,10 +1,16 @@
-" ---------------------------- Plugins ---------------------------- "
-
-call plug#begin('~/.config/nvim/autoload/')
-
-Plug 'catppuccin/nvim', {'as': 'catppuccin'}
-
 " ---------------------------- Settings --------------------------- "
+
+" configure nerdtree shortcuts
+" nnoremap <leader>n :NERDTreeFocus<CR>
+" nnoremap <C-n> :NERDTree<CR>
+" nnoremap <C-t> :NERDTreeToggle<CR>
+" nnoremap <C-f> :NERDTreeFind<CR>
+
+" nnoremap <C-t> :NERDTreeToggle<CR>
+
+"augroup cmds
+"    autocmd BufWritePre *.go :silent! lua require('go.format').gofmt()
+"augroup END
 
 " enable mouse scroll
 set mouse=a
