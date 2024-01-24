@@ -15,3 +15,5 @@ sudo tar -xvf go1.21.6.linux-amd64.tar.gz
 sudo mv go /usr/local
 
 /usr/local/go/bin/go install -v golang.org/x/tools/gopls@latest
+
+git config --global safe.directory '*'
