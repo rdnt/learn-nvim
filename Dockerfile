@@ -3,6 +3,7 @@ FROM ubuntu:23.04 as builder
 RUN apt-get update && \
     apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
+        tzdata \
         ca-certificates \
         sudo \
         curl \
@@ -26,6 +27,7 @@ RUN apt-get install -y --no-install-recommends \
 FROM builder as base
 
 ARG USER=flynn
+ARG TZ=UTC
 ARG USER_UID=1001
 ARG USER_GID=$USER_UID
 
@@ -39,6 +41,7 @@ ADD bootstrap.sh /home/$USER/bootstrap.sh
 RUN chmod +x /home/$USER/bootstrap.sh
 
 USER $USER
+ENV TZ=$TZ
 
 WORKDIR /home/$USER/workspace
 

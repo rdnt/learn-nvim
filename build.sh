@@ -4,5 +4,5 @@
 #   required dependencies.
 
 #export USER="flynn"
-
-docker build -t learn-nvim --build-arg USER=$USER .
+DATE=$(bash -c 'date +%Z')
+docker build -t learn-nvim --build-arg USER=$USER --build-arg TZ=$DATE .
