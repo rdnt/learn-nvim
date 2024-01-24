@@ -44,3 +44,7 @@ PROMPT='%B%F{10}%n@%m%f%b:%B%F{12}%~%f%b$ '
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH

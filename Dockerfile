@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 as builder
+FROM ubuntu:23.04 as builder
 
 RUN apt-get update && \
     apt-get upgrade -y \
@@ -6,6 +6,7 @@ RUN apt-get update && \
         ca-certificates \
         sudo \
         curl \
+        wget \
         gpg-agent \
         software-properties-common \
         build-essential \
@@ -25,7 +26,7 @@ RUN apt-get install -y --no-install-recommends \
 FROM builder as base
 
 ARG USER=flynn
-ARG USER_UID=1000
+ARG USER_UID=1001
 ARG USER_GID=$USER_UID
 
 RUN groupadd --gid $USER_GID $USER \
