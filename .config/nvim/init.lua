@@ -2,7 +2,7 @@
 require("config.lazy")
 
 vim.opt.relativenumber = false
-vim.opt.shell = "zsh -i"
+-- vim.opt.shell = "zsh -i"
 vim.opt.ignorecase = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
